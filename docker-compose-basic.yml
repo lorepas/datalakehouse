@@ -1,0 +1,69 @@
+version: '3.8'
+
+services:
+
+  minio:
+    image: minio/minio:latest
+    container_name: minio
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      - MINIO_ROOT_USER=minioadmin
+      - MINIO_ROOT_PASSWORD=minioadmin
+    command: server /data --console-address ":9001"
+    networks:
+      datalakehouse:
+    volumes:
+      - ./minio_data:/data
+      
+  dremio:
+    image: dremio/dremio-oss:latest
+    container_name: dremio
+    ports:
+      - "9047:9047"    # Web UI
+      - "31010:31010"  # ODBC
+      - "32010:32010"  # JDBC
+      - "45678:45678"  # Internal coordination
+    environment:
+      - DREMIO_JAVA_SERVER_EXTRA_OPTS=-Dpaths.dist=file:///opt/dremio/data/dist
+    volumes:
+      - ./dremio:/var/lib/dremio
+      - ./dremio_data:/opt/dremio/data
+    networks:
+      datalakehouse:
+    depends_on:
+      - minio
+      - nessie
+  
+  createbuckets:
+    image: minio/mc
+    depends_on:
+      - minio
+    entrypoint: >
+      /bin/sh -c "
+      /usr/bin/mc config host add minio http://minio:9000 minioadmin minioadmin;
+      /usr/bin/mc rm -r --force minio/nessie;
+      /usr/bin/mc mb minio/nessie;
+      exit 0;
+      "
+    networks:
+      datalakehouse:
+
+  nessie:
+    image: projectnessie/nessie:latest
+    container_name: nessie
+    ports:
+      - "19120:19120"
+    environment:
+      - QUARKUS_PROFILE=prod
+      - QUARKUS_HTTP_PORT=19120
+    networks:
+      datalakehouse:
+
+volumes:
+  dremio_data:
+  minio_data:
+
+networks:
+  datalakehouse:
