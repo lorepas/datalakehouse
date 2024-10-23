@@ -7,6 +7,12 @@ In questa repo sono presenti due docker compose:
 
 ## Esecuzione dell'ambiente
 
+Effettuare il clone della repo e spostarsi all'interno di essa:
+
+```bash
+git clone https://github.com/lorepas/datalakehouse.git && cd datalakehouse
+```
+
 Per eseguire il docker compose base basterà eseguire:
 
 ```bash
