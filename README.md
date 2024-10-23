@@ -43,7 +43,7 @@ Per connettere la sorgente Project Nessie a Dremio è sufficiente seguire questi
 
 1. Andare in Add Source e selezionare la sorgente Nessie:
 
-[source](img/conn1.png)
+[!source](img/conn1.png)
 
 1. Inserire i seguenti parametri:
 
@@ -51,7 +51,7 @@ Per connettere la sorgente Project Nessie a Dremio è sufficiente seguire questi
     - Endpoint URL: `http://nessie:19120/api/v2`
     - Authentication: `none`
 
-[source-1](img/conn2.png)
+[!source-1](img/conn2.png)
 
 1. In **Storage** inserire i seguenti parametri:
   
@@ -61,7 +61,7 @@ Per connettere la sorgente Project Nessie a Dremio è sufficiente seguire questi
       - AWS Access Key: `minioadmin`
       - AWS Access Secret: `minioadmin`
 
-[source-2](img/conn3.png)
+[!source-2](img/conn3.png)
 
 1. Nella stessa pagina, in **Other** inserire delle proprietà aggiuntive:
 
@@ -70,7 +70,7 @@ Per connettere la sorgente Project Nessie a Dremio è sufficiente seguire questi
     - Name: `dremio.s3.compat` e Value: `true`
     - Disattiva `Encrypt Connection`
 
-[source-3](img/conn4.png)
+[!source-3](img/conn4.png)
 
 1. Clicca su Salva
 
@@ -93,4 +93,5 @@ Vi è la possibilità di produrre alcuni dati di esempio direttamente sul topic 
 - Entrare nel container: `docker exec -it kafka /bin/bash`
 - Eseguire il CLI producer che prende in input i dati di esempio: `kafka-console-producer --bootstrap-server localhost:9092 --topic user < /kafka-example-data/records.txt`
 - I dati saranno visibili su Dremio:
-[final](img/kafka-dremio.png)
+
+[!final](img/kafka-dremio.png)
