@@ -60,6 +60,22 @@ services:
       - QUARKUS_HTTP_PORT=19120
     networks:
       datalakehouse:
+  
+  jupyter:
+    image: jupyter/scipy-notebook:latest
+    container_name: jupyter
+    ports:
+      - "8888:8888"
+    environment:
+      - JUPYTER_TOKEN=notebook
+    volumes:
+      - ./notebooks:/home/jovyan/work
+    networks:
+      datalakehouse:
+    depends_on:
+      - minio
+      - dremio
+      - nessie
 
 volumes:
   dremio_data:

@@ -2,7 +2,7 @@
 
 In questa repo sono presenti due docker compose:
 
-- `docker-compose-basic.yml` si occupa di eseguire i servizi essenziali, ossia Dremio, MinIO e Project Nessie. Con questi servizi l'utente è libero di scrivere dati a piacere in formato Iceberg e di utilizzare i Sample Source di Dremio per alcuni test;
+- `docker-compose-basic.yml` si occupa di eseguire i servizi essenziali, ossia Dremio, MinIO e Project Nessie. Inoltre è presente Jupyter per l'esplorazione dei dati. Con questi servizi l'utente è libero di scrivere dati a piacere in formato Iceberg e di utilizzare i Sample Source di Dremio per alcuni test;
 - `docker-compose-streaming.yml` oltre ai servizi citati prima, si occupa di eseguire anche Kafka con il Kafka Connect Sink Iceberg già installato.
 
 ## Esecuzione dell'ambiente
@@ -24,6 +24,10 @@ Se invece vogliamo eseguire il docker compose che contiene anche i servizi Strea
 ```bash
 docker compose -f docker-compose-streaming.yml up
 ```
+
+## Jupyter
+
+Il servizio è esposto su `http://localhost:8888` ed il token da inserire è `notebook`.
 
 ## MinIO
 
